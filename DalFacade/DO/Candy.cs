@@ -6,9 +6,13 @@ using System.Threading.Tasks;
 
 namespace DO;
 
+/// <summary>
+/// Candy is a struct that represent the candy on the screen    
+/// have a list of points, each point represent a candy
+/// </summary>
 public struct Candy
 {
-    public List<Point> CandyOnMap { get; set; }
+    public List<Point?> CandyOnMap { get; set; }
 
     public override string ToString()
     {

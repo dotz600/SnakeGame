@@ -1,22 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Runtime.Intrinsics;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace DO;
 
+/// <summary>
+/// Snake is a struct that represent the snake on the screen
+/// snake have a direction and a list of points
+/// each point represent a part of the snake body
+/// </summary>
 public struct Snake
 {
     public Direction Dir { get; set; }
 
-    public List<Point> SnakeBody { get; set; }
-
-    public override string ToString()
-    {
-        return "Snake Direction " + Dir +
+    public List<Point?> SnakeBody { get; set; }
+    
+    public override string ToString() => "Snake Direction " + Dir +
             "Length " + SnakeBody.Count;
-    }
 }
