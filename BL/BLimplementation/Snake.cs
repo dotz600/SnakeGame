@@ -10,12 +10,6 @@ internal class Snake : BlApi.ISnake
 {
     readonly IDal? dal = Dal.DalList.GetInstance();
 
-
-    // represent the jump of each move of the snake
-    // in our case 5 points
-    const int SNAKE_MOVE = 5;
-    
-    
  
     //max coordinate of the window, 
     // taken from data base
@@ -30,16 +24,16 @@ internal class Snake : BlApi.ISnake
         switch (sn.Dir)
         {
             case DO.Direction.Up:
-                p.D += SNAKE_MOVE;
+                p.D += 1;
                 break;
             case DO.Direction.Left:
-                p.R += SNAKE_MOVE;
+                p.R += 1;
                 break;
             case DO.Direction.Right:
-                p.L += SNAKE_MOVE;
+                p.L += 1;
                 break;
             case DO.Direction.Down:
-                p.U += SNAKE_MOVE;
+                p.U += 1;
                 break;
         }
         dal!.Snake.Create(p);
@@ -132,16 +126,16 @@ internal class Snake : BlApi.ISnake
         switch (dir)
         {
             case DO.Direction.Up:
-                p.U += SNAKE_MOVE;
+                p.U += 1;
                 break;
             case DO.Direction.Left:
-                p.L += SNAKE_MOVE;
+                p.L += 1;
                 break;
             case DO.Direction.Right:
-                p.R += SNAKE_MOVE;
+                p.R += 1;
                 break;
             case DO.Direction.Down:
-                p.D += SNAKE_MOVE;
+                p.D += 1;
                 break;
         }
         return p;
