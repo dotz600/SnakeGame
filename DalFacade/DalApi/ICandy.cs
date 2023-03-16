@@ -1,7 +1,14 @@
 ﻿using DO;
 
 namespace DalApi;
-
+/// <summary>
+/// this interface is for all candy action.
+/// create new random candy point.
+/// read - get the copy of the candy.
+/// update - change the point in index to new random point.
+/// delete candy at index.
+/// restart - clear all candy and make new on.
+/// </summary>
 public interface ICandy 
 {
     /// <summary>

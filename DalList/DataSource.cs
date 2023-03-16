@@ -9,7 +9,7 @@ namespace Dal;
 /// </summary>
 internal static class DataSource
 {
-    internal const int MAX_COORDINATE = 201, MAX_CANDY_ON_MAP = 3 ,SNAKE_START_LENGTH = 5;
+    internal const int MAX_COORDINATE = 200, MAX_CANDY_ON_MAP = 3 ,SNAKE_START_LENGTH = 5;
 
     readonly static Random randomGenerate = new(MAX_COORDINATE);
 
@@ -17,10 +17,10 @@ internal static class DataSource
 
     internal static Candy candy;
 
-    static DataSource() => s_Initialize();
+    static DataSource() => Initialize();
 
     
-    static private void s_Initialize()
+    static private void Initialize()
     {
         snake = new();
         candy = new();

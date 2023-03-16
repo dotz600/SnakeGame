@@ -17,6 +17,8 @@ sealed public class DalList : IDal
     
     public ICandy Candy { get; }
     public ISnake Snake { get; }
-    public static IDal Instance { get; } = new DalList();
+    private static IDal Instance { get; } = new DalList();
+    
+    public static IDal GetInstance() => Instance;
 
 }

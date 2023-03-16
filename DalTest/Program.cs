@@ -10,7 +10,7 @@ class Program
     {
         try
         {
-            IDal? obj = DalList.Instance;
+            IDal? obj = DalList.GetInstance();
 
             //snake test
             for (int i = 0; i < 10; i++)
@@ -76,7 +76,7 @@ class Program
         
     }
 
-    private static void printList(List<Point?> tmp1)
+    private static void PrintList(List<Point?> tmp1)
     {
         foreach (var item in tmp1)
         {
