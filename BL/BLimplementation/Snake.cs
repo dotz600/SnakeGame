@@ -6,48 +6,65 @@ namespace BLimplementation;
 /// this class implement the ISnake interface.
 /// it is the logic layer of the snake game.
 /// </summary>
-internal class Snake : BlApi.ISnake
+public class Snake : BlApi.ISnake
 {
     readonly IDal? dal = Dal.DalList.GetInstance();
 
- 
+    const int MAX_SNAKE_MOVE = 10;
+
     //max coordinate of the window, 
     // taken from data base
     readonly int maxCoordinate = Dal.DalList.GetInstance().Snake.GetMaxCordinate();
-
     
+    public delegate void CandyEaten();
+    public static event CandyEaten? CandyEatenEvent;
+
     public void Create()
     {
         DO.Snake sn = dal!.Snake.Read();
         DO.Point p = sn.SnakeBody.Last() ?? throw new NullReferenceException("snake is empty");
-        //move the point coordinate according to direction
-        switch (sn.Dir)
-        {
-            case DO.Direction.Up:
-                p.D += 1;
-                break;
-            case DO.Direction.Left:
-                p.R += 1;
-                break;
-            case DO.Direction.Right:
-                p.L += 1;
-                break;
-            case DO.Direction.Down:
-                p.U += 1;
-                break;
+        try
+        { 
+            //move the point coordinate according to direction
+            switch (sn.Dir)
+            {
+                case DO.Direction.Up:
+                    p.Y += MAX_SNAKE_MOVE;
+                    break;
+                case DO.Direction.Down:
+                    p.Y -= MAX_SNAKE_MOVE;
+                    break;
+                case DO.Direction.Left:
+                    p.X += MAX_SNAKE_MOVE;
+                    break;
+                case DO.Direction.Right:
+                    p.X -= MAX_SNAKE_MOVE;
+                    break;
+
+            }
+            dal!.Snake.Create(p);
+            CandyEatenEvent!();
         }
-        dal!.Snake.Create(p);
+        catch(ObjExistException)
+        {
+            p = sn.SnakeBody.Last() ?? throw new NullReferenceException("snake is empty");
+            p = UpdateHeadCoordinate(sn.Dir, p);
+            dal!.Snake.Create(p);
+            CandyEatenEvent!();
+        }
+
     }
 
     public bool IsGameOn()
     {
         var lst = Read().SnakeBody!;
-        foreach (var p in lst)
-            if (!CheckRange(p))
+        BO.Point head = lst[0];//check if head is out of boundery
+            if (head.X > maxCoordinate - MAX_SNAKE_MOVE*3 || head.X < MAX_SNAKE_MOVE ||
+                head.Y > maxCoordinate - MAX_SNAKE_MOVE*6 || head.Y < MAX_SNAKE_MOVE)
                 return false;
 
         //check the snake didn't touch himself
-        //that mean the head coordinate dont found in other point also
+        //that mean the head coordinate not equl to other point of the body
         for (int i = 1; i < lst.Count; i++)
             if (lst[0] == lst[i])
                 return false;
@@ -86,10 +103,10 @@ internal class Snake : BlApi.ISnake
 
         //update head coordinate
         DO.Point oldHead = snk.SnakeBody[0]!.Value;
-        dal!.Snake.Update(HeadCoordinateUpdate(snk.Dir, oldHead), 0);
+        dal!.Snake.Update(UpdateHeadCoordinate(snk.Dir, oldHead), 0);
 
         CheckCandyEaten(snk);
-        
+
         return Read();
     }
 
@@ -105,7 +122,8 @@ internal class Snake : BlApi.ISnake
         var candyLst = dal!.Candy.Read().CandyOnMap;
         for (int i = 0; i < candyLst.Count; i++)
         {
-            if (snk.SnakeBody[0] == candyLst[i])//head of the snake touch candy
+            if (Math.Abs(snk.SnakeBody[0]!.Value.X - candyLst[i]!.Value.X) < MAX_SNAKE_MOVE 
+                && Math.Abs(snk.SnakeBody[0]!.Value.Y - candyLst[i]!.Value.Y) < MAX_SNAKE_MOVE)//head of the snake touch candy
             {
                 dal!.Candy.Update(i);//make new candy
                 Create();            //add new point to the snake   
@@ -121,38 +139,26 @@ internal class Snake : BlApi.ISnake
     /// <param name="dir"></param>
     /// <param name="p"></param>
     /// <returns>the point with the updated valu</returns>
-    private static DO.Point HeadCoordinateUpdate(DO.Direction dir, DO.Point p)
+    private static DO.Point UpdateHeadCoordinate(DO.Direction dir, DO.Point p)
     {
         switch (dir)
         {
             case DO.Direction.Up:
-                p.U += 1;
-                break;
-            case DO.Direction.Left:
-                p.L += 1;
-                break;
-            case DO.Direction.Right:
-                p.R += 1;
+                p.Y -= MAX_SNAKE_MOVE;
                 break;
             case DO.Direction.Down:
-                p.D += 1;
+                p.Y += MAX_SNAKE_MOVE;
                 break;
+            case DO.Direction.Left:
+                p.X -= MAX_SNAKE_MOVE;
+                break;
+            case DO.Direction.Right:
+                p.X += MAX_SNAKE_MOVE;
+                break;
+
         }
         return p;
     }
 
-    /// <summary>
-    /// private help function
-    /// check if the point is in range of the window 
-    /// </summary>
-    /// <param name="p"></param>
-    /// <returns>true if inside the boundary, else false</returns>
-    private bool CheckRange(BO.Point p)
-    {
-        if (p.L > maxCoordinate || p.L < 0 || p.R > maxCoordinate || p.R < 0 ||
-            p.U > maxCoordinate || p.U < 0 || p.D > maxCoordinate || p.D < 0)
-            return false;
 
-        return true;
-    }
 }

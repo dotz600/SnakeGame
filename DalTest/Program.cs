@@ -15,12 +15,12 @@ class Program
             //snake test
             for (int i = 0; i < 10; i++)
             {
-                obj.Snake.Create(new DO.Point() { U = i + 7, D = i - 1, L = i + 10, R = i + 1 });
+                obj.Snake.Create(new DO.Point() { Y = i + 7, D = i - 1, L = i + 10, X = i + 1 });
             }
             var tmp = obj.Snake.Read().SnakeBody;
             for (int i = 0; i < tmp.Count; i++)
             {
-                obj.Snake.Update(new DO.Point() { U = i + 2, D = i - 2, L = i + 1, R = i + 10 }, i);
+                obj.Snake.Update(new DO.Point() { Y = i + 2, D = i - 2, L = i + 1, X = i + 10 }, i);
             }
             var tmp1 = obj.Snake.Read().SnakeBody;
             for (int i = 0; i < tmp.Count; i++)

@@ -9,9 +9,9 @@ namespace Dal;
 /// </summary>
 internal static class DataSource
 {
-    internal const int MAX_COORDINATE = 200, MAX_CANDY_ON_MAP = 3 ,SNAKE_START_LENGTH = 5;
+    internal const int MAX_COORDINATE = 600, MAX_CANDY_ON_MAP = 3 ,SNAKE_START_LENGTH = 10;
 
-    readonly static Random randomGenerate = new(MAX_COORDINATE);
+    readonly static Random randomGenerate = new();
 
     internal static Snake snake;
 
@@ -30,16 +30,12 @@ internal static class DataSource
         //Initialize capacity to 50 - will have enough space
         snake.SnakeBody = new(50);
         for (int i = 0; i < SNAKE_START_LENGTH; i++)
-        {
-            snake.SnakeBody.Add(new Point() { R = 0, D = i, L = 0, U = 0 });
-        }
+            snake.SnakeBody.Add(new Point() { X = 300, Y = 200+ i*10 });
             
         //generate random candys on map
         candy.CandyOnMap = new(MAX_CANDY_ON_MAP);
         for (int i = 0; i < MAX_CANDY_ON_MAP; i++)
-        {
            candy.CandyOnMap.Add(RandomPointMaker());
-        }
 
     }
 
@@ -52,10 +48,8 @@ internal static class DataSource
     {
         return new Point()
         {
-            D = randomGenerate.Next(MAX_COORDINATE),
-            L = randomGenerate.Next(MAX_COORDINATE),
-            R = randomGenerate.Next(MAX_COORDINATE),
-            U = randomGenerate.Next(MAX_COORDINATE)
+            X = randomGenerate.Next(MAX_COORDINATE -30),
+            Y = randomGenerate.Next(MAX_COORDINATE - 60)
         };
     }
 }

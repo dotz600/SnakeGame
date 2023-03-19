@@ -1,4 +1,6 @@
 ﻿
+using BLimplementation;
+
 namespace BlApi;
 
 /// <summary>
@@ -17,7 +19,7 @@ public interface ICandy
     /// clear all candy and create new candys
     /// </summary>
     /// <returns>list with new candys</returns>
-    List<BO.Point> Refresh();
+    BO.Candy Refresh();
 
 
     /// <summary>
@@ -31,5 +33,5 @@ public interface ICandy
     /// get a copy of the candy list from data base
     /// </summary>
     /// <returns></returns>
-    List<BO.Point> GetCandys();
+    BO.Candy Read();
 }

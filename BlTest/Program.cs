@@ -10,14 +10,14 @@ static class Program
         BlApi.IBL bl = new BLimplementation.BL();
 
         //candy test
-        var lst1 = bl.Candy.GetCandys();
+        var lst1 = bl.Candy.Read();
         bl.Candy.Create();
-        if (lst1.Count + 1 != bl.Candy.GetCandys().Count)
+        if (lst1.Count + 1 != bl.Candy.Read().Count)
             Console.WriteLine("faild to create");
         bl.Candy.Update(0);
-        if (lst1[0] == bl.Candy.GetCandys()[0])
+        if (lst1[0] == bl.Candy.Read()[0])
             Console.WriteLine("faild to update");
-        lst1 = bl.Candy.GetCandys();
+        lst1 = bl.Candy.Read();
         int i = 0;
         foreach (var x in bl.Candy.Refresh())
             if (x == lst1[i++])
