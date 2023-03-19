@@ -10,17 +10,17 @@ static class Program
         BlApi.IBL bl = new BLimplementation.BL();
 
         //candy test
-        var lst1 = bl.Candy.Read();
+        var lst1 = bl.Candy.Read().CandysOnMap;
         bl.Candy.Create();
-        if (lst1.Count + 1 != bl.Candy.Read().Count)
+        if (lst1!.Count + 1 != bl.Candy.Read().CandysOnMap!.Count)
             Console.WriteLine("faild to create");
         bl.Candy.Update(0);
-        if (lst1[0] == bl.Candy.Read()[0])
+        if (lst1[0] == bl.Candy.Read().CandysOnMap![0])
             Console.WriteLine("faild to update");
-        lst1 = bl.Candy.Read();
+        lst1 = bl.Candy.Read().CandysOnMap;
         int i = 0;
-        foreach (var x in bl.Candy.Refresh())
-            if (x == lst1[i++])
+        foreach (var x in bl.Candy.Refresh().CandysOnMap!)
+            if (x == lst1![i++])
                 Console.WriteLine("not deleted");
         
         Console.WriteLine("end of candy test - if no other output - its all working well!");

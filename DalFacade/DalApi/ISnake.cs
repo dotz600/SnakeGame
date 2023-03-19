@@ -46,4 +46,12 @@ public interface ISnake
     /// </summary>
     /// <returns>max cordinate</returns>
     int GetMaxCordinate();
+
+
+    /// <summary>
+    /// get the max move of the snake
+    /// the number of jump the snake make each iteration
+    /// </summary>
+    /// <returns></returns>
+    int GetMaxSnakeMove();
 }

@@ -2,13 +2,14 @@
 namespace BO;
 /// <summary>
 /// represent point in the window, 
-/// 0, 0, 0, 0 is the middle of the window
-/// right, down, left, up
+/// (0, 0) is the left up corner of the window
+/// X - how mach from left we go
+/// Y - how mach from up we go
 /// </summary>
 public class Point
 {
     /// <summary>
-    /// right coordinate
+    /// left coordinate
     /// </summary>
     public int X { get; set; }
 

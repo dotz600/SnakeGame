@@ -30,7 +30,7 @@ public class DALCandy : ICandy
 
         for (int i = 0; i < DataSource.MAX_CANDY_ON_MAP; i++)
             Create();
-        return DataSource.candy;
+        return new() { CandyOnMap = DataSource.candy.CandyOnMap.ToList() };
     }
    
     

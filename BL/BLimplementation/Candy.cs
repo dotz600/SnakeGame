@@ -15,13 +15,16 @@ namespace BLimplementation;
 public class Candy : BlApi.ICandy
 {
     readonly IDal? dal = Dal.DalList.GetInstance();
+
     public void Create() => dal?.Candy.Create();
 
     public BO.Candy Read() => new() { CandysOnMap = ConvertToBoPoint(dal!.Candy.Read().CandyOnMap) };
+
     public BO.Candy Refresh() => new() { CandysOnMap = ConvertToBoPoint(dal!.Candy.Restart().CandyOnMap) }; 
     
     public void Update(int index) => dal!.Candy.Update(index);
-    
+
+
     /// <summary>
     ///  help function - convert from DO.Point list to BO.Point list
     /// internal - for usege also in BLimplementation snake

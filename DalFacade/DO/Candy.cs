@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 namespace DO;
 
 /// <summary>
-/// Candy is a struct that represent the candy on the screen    
-/// have a list of points, each point represent a candy
+/// Candy is a struct that represents the candy on the screen    
+/// have a list of points, each point mean a candy
 /// </summary>
 public struct Candy
 {

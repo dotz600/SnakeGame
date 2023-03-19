@@ -1,21 +1,34 @@
-﻿using DalApi;
+﻿using Dal;
+using DalApi;
 
 namespace BLimplementation;
 
 /// <summary>
 /// this class implement the ISnake interface.
 /// it is the logic layer of the snake game.
+///        |Y
+///        |
+///        |
+///--------|-----------X
+///        |*
+///        |
+/// here * is point (0, 0) zero point from left & zero point from top
+/// there for head point clculation is defrent from the rest of the snake
+/// the calculation found in the code
 /// </summary>
 public class Snake : BlApi.ISnake
 {
     readonly IDal? dal = Dal.DalList.GetInstance();
 
-    const int MAX_SNAKE_MOVE = 10;
+    //max jump of the snake, 
+    // taken from data base
+    readonly int MaxSnakeMove = Dal.DalList.GetInstance().Snake.GetMaxSnakeMove();
 
     //max coordinate of the window, 
     // taken from data base
     readonly int maxCoordinate = Dal.DalList.GetInstance().Snake.GetMaxCordinate();
-    
+
+    //delegate & event for each time candy is eaten
     public delegate void CandyEaten();
     public static event CandyEaten? CandyEatenEvent;
 
@@ -24,29 +37,31 @@ public class Snake : BlApi.ISnake
         DO.Snake sn = dal!.Snake.Read();
         DO.Point p = sn.SnakeBody.Last() ?? throw new NullReferenceException("snake is empty");
         try
-        { 
+        {
             //move the point coordinate according to direction
             switch (sn.Dir)
             {
                 case DO.Direction.Up:
-                    p.Y += MAX_SNAKE_MOVE;
+                    p.Y += MaxSnakeMove;
                     break;
                 case DO.Direction.Down:
-                    p.Y -= MAX_SNAKE_MOVE;
+                    p.Y -= MaxSnakeMove;
                     break;
                 case DO.Direction.Left:
-                    p.X += MAX_SNAKE_MOVE;
+                    p.X += MaxSnakeMove;
                     break;
                 case DO.Direction.Right:
-                    p.X -= MAX_SNAKE_MOVE;
+                    p.X -= MaxSnakeMove;
                     break;
 
             }
             dal!.Snake.Create(p);
             CandyEatenEvent!();
         }
-        catch(ObjExistException)
+        catch (ObjExistException)
         {
+            //if cant create the point, can be becouse direction is down but tail is still go up
+            //then update point coordinate to the opposite side & recreate
             p = sn.SnakeBody.Last() ?? throw new NullReferenceException("snake is empty");
             p = UpdateHeadCoordinate(sn.Dir, p);
             dal!.Snake.Create(p);
@@ -59,9 +74,9 @@ public class Snake : BlApi.ISnake
     {
         var lst = Read().SnakeBody!;
         BO.Point head = lst[0];//check if head is out of boundery
-            if (head.X > maxCoordinate - MAX_SNAKE_MOVE*3 || head.X < MAX_SNAKE_MOVE ||
-                head.Y > maxCoordinate - MAX_SNAKE_MOVE*6 || head.Y < MAX_SNAKE_MOVE)
-                return false;
+        if (head.X > maxCoordinate - MaxSnakeMove * 3 || head.X < MaxSnakeMove ||
+            head.Y > maxCoordinate - MaxSnakeMove * 6 || head.Y < MaxSnakeMove)
+            return false;
 
         //check the snake didn't touch himself
         //that mean the head coordinate not equl to other point of the body
@@ -109,8 +124,10 @@ public class Snake : BlApi.ISnake
 
         return Read();
     }
+    
+    public int GetMaxCoordinate() => maxCoordinate;
 
-
+    
     /// <summary>
     /// private help function
     /// check if the update cause the snake to eat candy
@@ -122,8 +139,8 @@ public class Snake : BlApi.ISnake
         var candyLst = dal!.Candy.Read().CandyOnMap;
         for (int i = 0; i < candyLst.Count; i++)
         {
-            if (Math.Abs(snk.SnakeBody[0]!.Value.X - candyLst[i]!.Value.X) < MAX_SNAKE_MOVE 
-                && Math.Abs(snk.SnakeBody[0]!.Value.Y - candyLst[i]!.Value.Y) < MAX_SNAKE_MOVE)//head of the snake touch candy
+            if (Math.Abs(snk.SnakeBody[0]!.Value.X - candyLst[i]!.Value.X) < MaxSnakeMove
+                && Math.Abs(snk.SnakeBody[0]!.Value.Y - candyLst[i]!.Value.Y) < MaxSnakeMove)//head of the snake touch candy
             {
                 dal!.Candy.Update(i);//make new candy
                 Create();            //add new point to the snake   
@@ -139,26 +156,26 @@ public class Snake : BlApi.ISnake
     /// <param name="dir"></param>
     /// <param name="p"></param>
     /// <returns>the point with the updated valu</returns>
-    private static DO.Point UpdateHeadCoordinate(DO.Direction dir, DO.Point p)
+    private DO.Point UpdateHeadCoordinate(DO.Direction dir, DO.Point p)
     {
         switch (dir)
         {
             case DO.Direction.Up:
-                p.Y -= MAX_SNAKE_MOVE;
+                p.Y -= MaxSnakeMove;
                 break;
             case DO.Direction.Down:
-                p.Y += MAX_SNAKE_MOVE;
+                p.Y += MaxSnakeMove;
                 break;
             case DO.Direction.Left:
-                p.X -= MAX_SNAKE_MOVE;
+                p.X -= MaxSnakeMove;
                 break;
             case DO.Direction.Right:
-                p.X += MAX_SNAKE_MOVE;
+                p.X += MaxSnakeMove;
                 break;
 
         }
         return p;
     }
 
-
+    
 }

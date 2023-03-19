@@ -7,6 +7,10 @@ using DalApi;
 
 namespace Dal;
 
+/// <summary>
+/// this class implement the IDal interface.
+/// using singltom pattern return the same instance of the class
+/// </summary>
 sealed public class DalList : IDal
 {
     private DalList()

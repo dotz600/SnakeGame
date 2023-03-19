@@ -8,7 +8,6 @@ namespace BlApi;
 
 public interface IBL
 {
-    
     ISnake Snake { get; }
     
     ICandy Candy { get; }

@@ -6,8 +6,8 @@
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="600" KeyDown="Canvas_KeyDown" KeyUp="Canvas_KeyUp">
+        Title="MainWindow" KeyDown="Canvas_KeyDown" KeyUp="Canvas_KeyUp">
     <Canvas x:Name="myCanvas" Focusable="True" Background="#FFFED871">
-        <Button Content="Start Game" Canvas.Left="275" Canvas.Top="300" Height="30" Width="70" Background="#FF36FC00" Click="Button_Click" />
+        <Button x:Name="startButton" Content="Start Game" Canvas.Left="275" Canvas.Top="300" Height="30" Width="70" Background="#FF36FC00" Click="Button_Click" />
     </Canvas>
 </Window>

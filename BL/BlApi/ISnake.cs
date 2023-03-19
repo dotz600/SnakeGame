@@ -48,4 +48,11 @@ public interface ISnake
     /// <param name="dir"></param>
     /// <returns>new Bo snake after the move</returns>
     BO.Snake UpdateMove(BO.Direction? dir);
+
+    /// <summary>
+    /// get the max coordinate of the map
+    /// needed for PL to set window size
+    /// </summary>
+    /// <returns></returns>
+    int GetMaxCoordinate();
 }

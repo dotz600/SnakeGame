@@ -28,6 +28,7 @@ public class DALSnake : ISnake
     public void UpdateDirection(Direction dir) => DataSource.snake.Dir = dir;
 
 
-
+    public int GetMaxSnakeMove() => DataSource.MAX_SNAKE_MOVE;
+    
     public int GetMaxCordinate() => DataSource.MAX_COORDINATE;
 }
