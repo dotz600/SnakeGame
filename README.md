@@ -5,10 +5,10 @@ Here is my humble verzion.
 ![alt text](https://github.com/dotz600/SnakeGame/blob/master/PL/Image/3.png)
 
 ## Table of Contents
-- [More Visual Examples](#More Visual Examples )
+- [More Visual Examples](#Visual-Examples)
 - [Introduction](#introduction)
 - [Features](#features)
-- [Key Programming Aspects Demonstrated](#Key Programming Aspects Demonstrated)
+- [Key Programming Aspects Demonstrated](#Key-Programming-Aspects-Demonstrated)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
