@@ -75,7 +75,7 @@ If the snake collides with the boundaries of the screen or with itself, the game
 The game speed increases over time.
 
 
-## More Visual Examples
+## Visual Examples
 ![alt text](https://github.com/dotz600/SnakeGame/blob/master/PL/Image/1.png)
 ![alt text](https://github.com/dotz600/SnakeGame/blob/master/PL/Image/2.png)
 ![alt text](https://github.com/dotz600/SnakeGame/blob/master/PL/Image/4.png)
